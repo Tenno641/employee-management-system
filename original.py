@@ -3,169 +3,177 @@ from tkinter import ttk
 from tkinter import messagebox
 from db import Database
 
-db = Database("Employee.db")
+db = Database("Students.db")
 
-root = Tk()
-root.title("Employee Management System")
-root.geometry("1920x1080+0+0")
-root.config(bg="#2c3e50")
-root.state("zoomed")
+#initializing program window
+window = Tk()
+window.title("Students Management System")
+window.geometry("1600x800+0+10")
+window.configure(bg='#424549')
+window.resizable(False, False)
 
+code = StringVar()
 name = StringVar()
-age = StringVar()
-city = StringVar()
-gender = StringVar()
 email = StringVar()
-contact = StringVar()
+gender = StringVar()
+phone = StringVar()
+city = StringVar()
 
-# Entries Frame
-entries_frame = Frame(root, bg="#535c68")
-entries_frame.pack(side=TOP, fill=X)#
-title = Label(entries_frame, text="Employee Management System", font=("Calibri", 18, "bold"), bg="#535c68", fg="white")
-title.grid(row=0, column=2, padx=10, pady=20)
 
-lblName = Label(entries_frame, text="Name", font=("Calibri", 16), bg="#535c68", fg="white")
-lblName.grid(row=1, column=0, padx=10, pady=10, sticky="w")
-txtName = Entry(entries_frame, textvariable=name, font=("Calibri", 16), width=30)
-txtName.grid(row=1, column=1, padx=10, pady=10, sticky="w")
+#initializing entries form
+entriesForm = Frame(window, bg="#1e2124")
+entriesForm.place(x=10, y=10, width=400, height=780)
 
-lblAge = Label(entries_frame, text="Age", font=("Calibri", 16), bg="#535c68", fg="white")
-lblAge.grid(row=1, column=2, padx=10, pady=10, sticky="w")
-txtAge = Entry(entries_frame, textvariable=age, font=("Calibri", 16), width=30)
-txtAge.grid(row=1, column=3, padx=10, pady=10, sticky="w")
 
-lblcity = Label(entries_frame, text="City", font=("Calibri", 16), bg="#535c68", fg="white")
-lblcity.grid(row=2, column=0, padx=10, pady=10, sticky="w")
-txtcity = Entry(entries_frame, textvariable=city, font=("Calibri", 16), width=30)
-txtcity.grid(row=2, column=1, padx=10, pady=10, sticky="w")
+#Form title 
+formTitle = Label(entriesForm, text="Students Management System", font=('', 16, 'bold'), bg="#1e2124", fg="white")
+formTitle.place(x=40, y=30)
 
-lblEmail = Label(entries_frame, text="Email", font=("Calibri", 16), bg="#535c68", fg="white")
-lblEmail.grid(row=2, column=2, padx=10, pady=10, sticky="w")
-txtEmail = Entry(entries_frame, textvariable=email, font=("Calibri", 16), width=30)
-txtEmail.grid(row=2, column=3, padx=10, pady=10, sticky="w")
 
-lblGender = Label(entries_frame, text="Gender", font=("Calibri", 16), bg="#535c68", fg="white")
-lblGender.grid(row=3, column=0, padx=10, pady=10, sticky="w")
-comboGender = ttk.Combobox(entries_frame, font=("Calibri", 16), width=28, textvariable=gender, state="readonly")
-comboGender['values'] = ("Male", "Female")
-comboGender.grid(row=3, column=1, padx=10, sticky="w")
+#Form entries
+#Code
+codelbl = Label(entriesForm, text="Code", font=('', 16, 'bold'), bg="#1e2124", fg="white")
+codelbl.place(x=20, y=100)
+stuCode = Entry(entriesForm, textvariable=code, font=('', 16))
+stuCode.place(x=120, y=100) 
 
-lblContact = Label(entries_frame, text="Contact No", font=("Calibri", 16), bg="#535c68", fg="white")
-lblContact.grid(row=3, column=2, padx=10, pady=10, sticky="w")
-txtContact = Entry(entries_frame, textvariable=contact, font=("Calibri", 16), width=30)
-txtContact.grid(row=3, column=3, padx=10, sticky="w")
+#Name
+namelbl = Label(entriesForm, text="Name", font=('', 16, 'bold'), bg="#1e2124", fg="white")
+namelbl.place(x=20, y=160)
+stuName = Entry(entriesForm, textvariable=name, font=('', 16))
+stuName.place(x=120, y=160)
 
-lblAddress = Label(entries_frame, text="Address", font=("Calibri", 16), bg="#535c68", fg="white")
-lblAddress.grid(row=4, column=0, padx=10, pady=10, sticky="w")
+#Email
+emaillbl = Label(entriesForm, text="E-mail", font=('', 16, 'bold'), bg="#1e2124", fg="white")
+emaillbl.place(x=20, y=220)
+stuEmail = Entry(entriesForm, textvariable=email, font=('', 16))
+stuEmail.place(x=120, y=220)
 
-txtAddress = Text(entries_frame, width=85, height=5, font=("Calibri", 16))
-txtAddress.grid(row=5, column=0, columnspan=4, padx=10, sticky="w")
+#Gender
+genderlbl = Label(entriesForm, text="Gender", font=('', 16, 'bold'), bg="#1e2124", fg="white")
+genderlbl.place(x=20, y=280)
+stuGender = ttk.Combobox(entriesForm, textvariable=gender, font=('', 16), width=18, state="readonly")
+stuGender['values'] = ("Male", "Female")
+stuGender.place(x=120, y=280)
+
+#Phone
+phonelbl = Label(entriesForm, text="Phone", font=('', 16, 'bold'), bg="#1e2124", fg="white")
+phonelbl.place(x=20, y=340)
+stuPhone = Entry(entriesForm, textvariable=phone, font=('', 16))
+stuPhone.place(x=120, y=340)
+
+#City
+citylbl = Label(entriesForm, text="City", font=('', 16, 'bold'), bg="#1e2124", fg="white")
+citylbl.place(x=20, y=400)
+stuCity = Entry(entriesForm, textvariable=city, font=('', 16))
+stuCity.place(x=120, y=400)
+
+#Buttons functions
 
 def getData(event):
-    selected_row = tv.focus()
-    data = tv.item(selected_row)
+    selected_row = tabelView.focus()
+    data = tabelView.item(selected_row)
     global row
     row = data["values"]
     #print(row)
-    name.set(row[1])
-    age.set(row[2])
-    city.set(row[3])
-    email.set(row[4])
-    gender.set(row[5])
-    contact.set(row[6])
-    txtAddress.delete(1.0, END)
-    txtAddress.insert(END, row[7])
+    code.set(row[1])
+    name.set(row[2])
+    email.set(row[3])
+    gender.set(row[4])
+    phone.set(row[5])
+    city.set(row[6])
 
 def dispalyAll():
-    tv.delete(*tv.get_children())
+    tabelView.delete(*tabelView.get_children())
     for row in db.fetch():
-        tv.insert("", END, values=row)
+        tabelView.insert("", END, values=row)
 
 
-def add_employee():
-    if txtName.get() == "" or txtAge.get() == "" or txtcity.get() == "" or txtEmail.get() == "" or comboGender.get() == "" or txtContact.get() == "" or txtAddress.get(
-            1.0, END) == "":
+def add_student():
+    if stuCode.get() == "" or stuName.get() == "" or stuEmail.get() == "" or stuGender.get() == "" or stuPhone.get() == "" or stuCity.get() == "":
         messagebox.showerror("Erorr in Input", "Please Fill All the Details")
         return
-    db.insert(txtName.get(),txtAge.get(), txtcity.get() , txtEmail.get() ,comboGender.get(), txtContact.get(), txtAddress.get(
-            1.0, END))
+    db.insert(stuCode.get(),stuName.get(), stuEmail.get() , stuGender.get() ,stuPhone.get(), stuCity.get())
     messagebox.showinfo("Success", "Record Inserted")
     clearAll()
     dispalyAll()
 
 
 
-def update_employee():
-    if txtName.get() == "" or txtAge.get() == "" or txtcity.get() == "" or txtEmail.get() == "" or comboGender.get() == "" or txtContact.get() == "" or txtAddress.get(
-            1.0, END) == "":
+def update_student():
+    if stuCode.get() == "" or stuName.get() == "" or stuEmail.get() == "" or stuGender.get() == "" or stuPhone.get() == "" or stuCity.get() == "":
         messagebox.showerror("Erorr in Input", "Please Fill All the Details")
         return
-    db.update(row[0],txtName.get(), txtAge.get(), txtcity.get(), txtEmail.get(), comboGender.get(), txtContact.get(),
-              txtAddress.get(
-                  1.0, END))
+    db.update(row[0], stuCode.get(),stuName.get(), stuEmail.get() , stuGender.get() ,stuPhone.get(), stuCity.get())
     messagebox.showinfo("Success", "Record Update")
     clearAll()
     dispalyAll()
 
 
-def delete_employee():
+def delete_student():
     db.remove(row[0])
     clearAll()
     dispalyAll()
 
 
 def clearAll():
+    code.set("")
     name.set("")
-    age.set("")
-    city.set("")
-    gender.set("")
     email.set("")
-    contact.set("")
-    txtAddress.delete(1.0, END)
+    gender.set("")
+    phone.set("")
+    city.set("")
 
 
-btn_frame = Frame(entries_frame, bg="#535c68")
-btn_frame.grid(row=6, column=0, columnspan=4, padx=10, pady=10, sticky="w")
-btnAdd = Button(btn_frame, command=add_employee, text="Add Details", width=15, font=("Calibri", 16, "bold"), fg="white",
-                bg="#16a085", bd=0).grid(row=0, column=0, padx=40)
-btnEdit = Button(btn_frame, command=update_employee, text="Update Details", width=15, font=("Calibri", 16, "bold"),
-                 fg="white", bg="#2980b9",
-                 bd=0).grid(row=0, column=1, padx=40)
-btnDelete = Button(btn_frame, command=delete_employee, text="Delete Details", width=15, font=("Calibri", 16, "bold"),
-                   fg="white", bg="#c0392b",
-                   bd=0).grid(row=0, column=2, padx=40)
-btnClear = Button(btn_frame, command=clearAll, text="Clear Details", width=15, font=("Calibri", 16, "bold"), fg="white",
-                  bg="#f39c12",
-                  bd=0).grid(row=0, column=3, padx=40)
-
-btnExit = Button(btn_frame, command=exit, text="Exit", width=15, font=("Calibri", 16, "bold"), fg="white",
-                  bg="#f39c12",
-                  bd=0).grid(row=0, column=4, padx=40)
 
 
-# Table Frame
-tree_frame = Frame(root, bg="#ecf0f1")
-tree_frame.place(x=0, y=480, width=1980, height=520)
-style = ttk.Style()
-style.configure("mystyle.Treeview", font=('Calibri', 18),
-                rowheight=50)  # Modify the font of the body
-style.configure("mystyle.Treeview.Heading", font=('Calibri', 18))  # Modify the font of the headings
-tv = ttk.Treeview(tree_frame, columns=(1, 2, 3, 4, 5, 6, 7, 8), style="mystyle.Treeview")
-tv.heading("1", text="ID")
-tv.column("1", width=5)
-tv.heading("2", text="Name")
-tv.heading("3", text="Age")
-tv.column("3", width=5)
-tv.heading("4", text="City")
-tv.column("4", width=10)
-tv.heading("5", text="Email")
-tv.heading("6", text="Gender")
-tv.column("6", width=10)
-tv.heading("7", text="Contact")
-tv.heading("8", text="Address")
-tv['show'] = 'headings'
-tv.bind("<ButtonRelease-1>", getData)
-tv.pack(fill=X)
+#Buttons frame
+btnFrame = Frame(entriesForm, bg="#1e2124")
+btnFrame.place(x=10, y=460, width=380, height=250)
+
+#Add
+addBtn = Button(btnFrame, text="Add", font=('', 16, 'bold'), command=add_student, bg="#7289da", fg="white").place(x=35, y=30, width=300)
+
+#Delete
+addDelete = Button(btnFrame, text="Delete", font=('', 16, 'bold'), command=delete_student, bg="#7289da", fg="white").place(x=35, y=80, width=300)
+
+#Update
+addUpdate = Button(btnFrame, text="Update", font=('', 16, 'bold'), command=update_student, bg="#7289da", fg="white").place(x=35, y=130, width=300)
+
+#Clear
+addClear = Button(btnFrame, text="Clear", font=('', 16, 'bold'), command=clearAll, bg="#7289da", fg="white").place(x=35, y=180, width=300)
+
+
+#Table Form
+tabelFrame = Frame(window)
+tabelFrame.place(x=420, y=10, width=1170, height=780)
+
+#Table Heading
+tabelView = ttk.Treeview(tabelFrame, columns=(1, 2, 3, 4, 5, 6, 7))
+
+tabelView.heading("1", text="No.")
+tabelView.column("1", width=20)
+
+tabelView.heading("2", text="Code")
+
+tabelView.heading("3", text="Name")
+
+tabelView.heading("4", text="E-mail")
+
+tabelView.heading("5", text="Gender")
+tabelView.column("5", width=50)
+
+tabelView.heading("6", text="Phone")
+
+tabelView.heading("7", text="City")
+tabelView.column("7", width=50)
+
+tabelView['show'] = 'headings'
+tabelView.bind("<ButtonRelease-1>", getData)
+tabelView.pack(fill=X)
+
+
+
 
 dispalyAll()
-root.mainloop()
+window.mainloop()
