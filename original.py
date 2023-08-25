@@ -173,6 +173,5 @@ tabelView.bind("<ButtonRelease-1>", getData)
 tabelView.pack(fill=X)
 
 
-
 dispalyAll()
 window.mainloop()
