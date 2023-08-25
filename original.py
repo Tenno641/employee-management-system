@@ -174,6 +174,5 @@ tabelView.pack(fill=X)
 
 
 
-
 dispalyAll()
 window.mainloop()
